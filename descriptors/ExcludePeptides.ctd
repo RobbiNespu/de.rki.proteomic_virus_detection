@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="ExcludePeptides" version="0.0.1" category="VirusDetection"
+      docurl="http://rki.de">
+    <executableName>ExcludePeptides</executableName>
+    <description><![CDATA[]]></description>
+    <manual><![CDATA[]]></manual>
+    <docurl>Direct links in docs</docurl>
+    <cli>
+        <!-- Following clielements are arguments. You should consider
+             providing a help text to ease understanding. -->
+        <clielement optionIdentifier="-p" isList="false">
+            <mapping referenceName="main.peptide_file" />
+        </clielement>
+		<clielement optionIdentifier="-m" isList="false">
+            <mapping referenceName="main.spectra_file" />
+        </clielement>
+		<clielement optionIdentifier="-o" isList="false">
+            <mapping referenceName="main.output_file" />
+        </clielement>
+        <clielement optionIdentifier="-r" isList="false">
+            <mapping referenceName="main.rt_precision" />
+        </clielement>
+        <clielement optionIdentifier="-z" isList="false">
+            <mapping referenceName="main.mz_precision" />
+        </clielement>
+    </cli>
+    <PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="main" description="Removes spectra with associated/identified peptides">
+            <ITEM name="spectra_file" value="" type="input-file" required="true"
+                  description="the original spectra" supported_formats="*.mzml" />
+			<ITEM name="peptide_file" value="" type="input-file" required="true"
+                  description="detected peptides" supported_formats="*.idxml" />
+			<ITEM name="output_file" value="" type="output-file" required="true"
+                  description="the generated spectra" supported_formats="*.mzml" />
+            <ITEM name="rt_precision" description="The number of digits (after .) to which is rounded for the time distinction" value="2" type="int" />
+            <ITEM name="mz_precision" description="The number of digits (after .) to which is rounded for the mass to charge ratio" value="4" type="int" />
+        </NODE>
+    </PARAMETERS>
+</tool>

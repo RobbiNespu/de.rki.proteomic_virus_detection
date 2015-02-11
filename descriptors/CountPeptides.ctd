@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="CountPeptides" version="0.0.1" category="VirusDetection"
+      docurl="http://rki.de">
+    <executableName>CountPeptides</executableName>
+    <description><![CDATA[]]></description>
+    <manual><![CDATA[]]></manual>
+    <docurl>Direct links in docs</docurl>
+    <cli>
+        <!-- Following clielements are arguments. You should consider
+             providing a help text to ease understanding. -->
+        <clielement optionIdentifier="-i" isList="false">
+            <mapping referenceName="main.idxml_files" />
+        </clielement>
+		<clielement optionIdentifier="-o" isList="false">
+            <mapping referenceName="main.output_file" />
+        </clielement>
+
+    </cli>
+    <PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="main" description="Removes spectra with associated/identified peptides">
+            <ITEMLIST name="idxml_files" value="" type="input-file" required="true"
+                  description="the original spectra" supported_formats="*.idxml" />
+			<ITEM name="output_file" value="" type="output-file" required="true"
+                  description="the generated spectra" supported_formats="*.txt" />
+        </NODE>
+    </PARAMETERS>
+</tool>
