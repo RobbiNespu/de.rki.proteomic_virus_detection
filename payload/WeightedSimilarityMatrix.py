@@ -181,8 +181,9 @@ def weightedMatching(weightedPeptFile, dbFile, sum_all=True, verbose=True):
     for line in open(weightedPeptFile, "rU"):
         if float(line.split("\t")[0]) > 0: #this line is NEW (irritates cmatches and cPept)
             cPept += 1
+            peptide_seq = line.split("\t")[1].rstrip().upper() # another minor (speed) change
             for i,DBi in enumerate(DB): # search process (weighted peptide in DB)
-                if line.split("\t")[1].rstrip().upper() in str(DBi):
+                if peptide_seq in DBi:
                     cMatch += 1
                     if sum_all: pMatch += float(line.split("\t")[0])
                     elif (float(line.split("\t")[0]) > 0): prot_count[i] = 1
