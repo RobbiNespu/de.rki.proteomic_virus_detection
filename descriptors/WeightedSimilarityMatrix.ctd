@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="WeightedSimilarityMatrix" version="0.0.2" category="Pipasic"
+      docurl="http://rki.de">
+    <executableName>WeightedSimilarityMatrix</executableName>
+    <description><![CDATA[Constructs a weighted similarity matrix for the Pipasic Tool]]></description>
+    <manual><![CDATA[Constructs a weighted similarity matrix for the Pipasic Tool]]></manual>
+    <docurl>Direct links in docs</docurl>
+    <cli>
+        <!-- Following clielements are arguments. You should consider
+             providing a help text to ease understanding. -->
+        <clielement optionIdentifier="-d" isList="false">
+            <mapping referenceName="main.digest_files" />
+        </clielement>
+        <clielement optionIdentifier="-p" isList="false">
+            <mapping referenceName="main.peptide_files" />
+        </clielement>
+		<clielement optionIdentifier="-b" isList="false">
+            <mapping referenceName="main.database_files" />
+        </clielement>
+		<clielement optionIdentifier="-o" isList="false">
+            <mapping referenceName="main.output_file" />
+        </clielement>
+        <clielement optionIdentifier="-i" isList="false">
+            <mapping referenceName="main.inital_weight" />
+        </clielement>
+    </cli>
+    <PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="main" description="Construct a weighted peptide similarity matrix for given genomes">
+            <ITEMLIST name="digest_files" value="" type="input-file" required="true"
+                  description="digested peptides" supported_formats="*.fasta" />
+			<ITEMLIST name="peptide_files" value="" type="input-file" required="true"
+                  description="detected peptides" supported_formats="*.idxml" />
+			<ITEMLIST name="database_files" value="" type="input-file" required="true"
+                  description="comparative genomes" supported_formats="*.fasta" />
+            <ITEM name="output_file" value="" type="output-file" required="true"
+                  description="Similarity-Matrix file" supported_formats="*.txt, *.csv" />
+            <ITEM name="inital_weight" value="0" type="int" required="false"
+                  description="initial weight for all peptides" />
+        </NODE>
+    </PARAMETERS>
+</tool>

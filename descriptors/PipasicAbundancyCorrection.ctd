@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="PipasicAbundanceCorrection" version="0.0.1" category="Pipasic"
+      docurl="http://rki.de">
+    <executableName>AbundanceCorrection</executableName>
+    <description><![CDATA[Calculate the abundance correction for the Pipasic Tool]]></description>
+    <manual><![CDATA[Calculate the abundance correction for the Pipasic Tool]]></manual>
+    <docurl>Direct links in docs</docurl>
+    <cli>
+        <!-- Following clielements are arguments. You should consider
+             providing a help text to ease understanding. -->
+        <clielement optionIdentifier="-s" isList="false">
+            <mapping referenceName="main.spectra_file" />
+        </clielement>
+        <clielement optionIdentifier="-p" isList="false">
+            <mapping referenceName="main.peptide_files" />
+        </clielement>
+		<clielement optionIdentifier="-m" isList="false">
+            <mapping referenceName="main.matrix_files" />
+        </clielement>
+		<clielement optionIdentifier="-r" isList="false">
+            <mapping referenceName="main.relative_abundance_file" />
+        </clielement>
+        <clielement optionIdentifier="-c" isList="false">
+            <mapping referenceName="main.corrected_counts_file" />
+        </clielement>
+    </cli>
+    <PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="main" description="Construct a weighted peptide similarity matrix for given genomes">
+            <ITEM name="spectra_file" value="" type="input-file" required="true"
+                  description="file of the input mass spectra" supported_formats="*.mzml" />
+			<ITEMLIST name="peptide_files" value="" type="input-file" required="true"
+                  description="detected peptides" supported_formats="*.idxml" />
+			<ITEM name="matrix_files" value="" type="input-file" required="true"
+                  description="Similarity-Matrix file" supported_formats="*.txt, *.csv" />
+            <ITEM name="relative_abundance_file" value="" type="output-file" required="true"
+                  description="File with the relative abundance values" supported_formats="*.txt, *.csv" />
+            <ITEM name="corrected_counts_file" value="" type="output-file" required="true"
+                  description="File with the corrected count numbers" supported_formats="*.txt, *.csv" />
+        </NODE>
+    </PARAMETERS>
+</tool>
