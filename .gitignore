@@ -6,4 +6,4 @@
 
 *.db
 
-*/lib/*
+payload/binaries_windows/lib/*
