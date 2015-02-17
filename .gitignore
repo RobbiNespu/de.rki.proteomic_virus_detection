@@ -7,3 +7,4 @@
 *.db
 
 payload/binaries_windows/lib/*
+payload/binaries_python_win/lib/*
