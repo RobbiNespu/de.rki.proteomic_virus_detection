@@ -1,21 +1,7 @@
 import xml.etree.ElementTree as ET
 from re import match
 from optparse import OptionParser
-
-def floating_round(number, digits, base = 10):
-    '''
-    this function is designed to round similar numbers to equal values 
-    (therefore 0.4999999 = 0.5 with round at digits -1, 1, 2 ... but not
-    0 which is overcome here)
-    => rounded up is from 0.444444444 (which is an unlikely number for floating point errors)
-    Other explanation: the rounding boundary is set to another number which is not as definite as 0.5 and therefore less likely to show up)
-    '''
-    for i in range(base, digits -1, -1):
-        number = round(number, i)
     
-    return number
-    
-
 def idxmlSpectraNums(idxml_file):
 
     idxml_tree = ET.parse(idxml_file)
@@ -31,19 +17,12 @@ def idxmlSpectraNums(idxml_file):
             # assume that there is only one PeptideHit (nothing else detected but theoretically/by definition possible)
             charge = int(peptide_id.find('PeptideHit').get('charge'))
 
-            peptides.append((mz, rt, charge))
+            peptides.append([mz, rt, charge])
     return peptides
 
-def main(idxml_file, mzml_file, output_file, mz_precision = None, rt_precision = None):
+def main(idxml_file, mzml_file, output_file, mz_precision = 0, rt_precision = 0):
 
     peptides = idxmlSpectraNums(idxml_file)
-
-    # correct the mz and/or rt values if necessary
-    if mz_precision:
-        peptides = [(floating_round(peptide[0], mz_precision), peptide[1], peptide[2]) for peptide in peptides]
-    if rt_precision:
-        peptides = [(peptide[0], floating_round(peptide[1], rt_precision), peptide[2]) for peptide in peptides]
-
 
     mzml_tree = ET.parse(mzml_file) # load the input mzml file and parse the xml structure
     mzml_root = mzml_tree.getroot() # access point to the xml structure
@@ -58,26 +37,43 @@ def main(idxml_file, mzml_file, output_file, mz_precision = None, rt_precision =
             for spectrum in spectrum_list.findall('%sspectrum' % namespace):
                 # scan the spectra and retrieve the parameters rt, mz and charge
                 rt = float(spectrum.find('%sscanList' % namespace).find('%sscan' % namespace).find('%scvParam' % namespace).get('value'))
-                if rt_precision:
-                    rt = floating_round(rt, rt_precision)
                 ion = spectrum.find('%sprecursorList' % namespace).find('%sprecursor' % namespace).find('%sselectedIonList' % namespace).find('%sselectedIon' % namespace)
                 for cvParam in ion.findall('%scvParam' % namespace):
                     if cvParam.get('name') == 'selected ion m/z':
                         mz = float(cvParam.get('value'))
-                        if mz_precision:
-                            mz = floating_round(mz, mz_precision)
                     elif cvParam.get('name') == 'charge state':
                         charge = int(cvParam.get('value'))
 
                 # remove if the spectrum appears in the peptide list
-                if (mz, rt, charge) in peptides:
-                    spectrum_list.remove(spectrum)
-                    num += 1
+                for peptide in peptides:
+                    if abs(mz - peptide[0]) <= mz_precision and abs(rt - peptide[1]) <= rt_precision and charge == peptide[2]:
+                        spectrum_list.remove(spectrum)
+                        num += 1
+                        break
 
     print '%i spectra removed' % num
     
+    # refresh the spectra ids and counts:
+    for run in mzml_root.findall('%srun' % namespace): # there should be only one but you never know
+        for spectrum_list in run.findall('%sspectrumList' % namespace): # same here
+            index = 0
+            for spectrum in spectrum_list.findall('%sspectrum' % namespace):
+                spectrum.set('index', str(index))
+                index += 1
+            spectrum_list.set('count', str(index))
+            
+    #refresh software list (to include this modification step)
+    software_list = mzml_root.find('%ssoftwareList' % namespace)
+    # update the count
+    software_count = int(software_list.get('count')) +1
+    software_list.set('count', str(software_count))
+    # create software subelement in the list
+    software_element = ET.SubElement(software_list, 'software', attrib={'id' : 'unknown id', 'version' : '2.0.0'})
+    cvParam = ET.SubElement(software_element, 'cvParam', attrib={'cvRef':"MS", 'accession':"MS:1000799", 'name':"custom unreleased software tool"})
+    
+    
     if num != len(peptides):
-        print '%i spectra where found in the idxml file, so there seems to be something strange.\nMaybe try to adjust the precision parameters for rt and mz values' % len(peptides)
+        print '%i spectra where found in the idxml file, so there seems to be something strange.\nIt maybe be of interest to adjust the precision parameters for rt and mz values' % len(peptides)
     else:
         print 'Run as expected'
     # central namespace, so it does not get added to every (sub-) element when writing the new file ( 1:-1 to exclude the brackets)
@@ -92,8 +88,8 @@ if __name__ == '__main__':
     op.add_option('-m','--mzml', dest='mzml_file', default=None, help='the input mzml file from which the peptides are removed')
     op.add_option('-p','--peptides', dest='idxml_file', default=None, help='the idXML file that contains the detected peptides')
     op.add_option('-o','--output', dest='output_file', default=None, help='the output mzml file with the remaining spectra')
-    op.add_option('-r','--rt', dest='rt_precision', type="int", default=None, help='some peptide search engine seem to have floating point errors. To still backtrack peptides you can specify how much rt values are rounded to overwrite such errors')
-    op.add_option('-z','--mz', dest='mz_precision', type="int", default=None, help='as with rt but for mz')
+    op.add_option('-r','--rt', dest='rt_precision', type="float", default=0, help='some peptide search engine seem to have floating point errors. To still backtrack peptides you can specify how much rt values can deviate to overwrite such errors')
+    op.add_option('-z','--mz', dest='mz_precision', type="float", default=0, help='as with rt but for mz')
 
     opts, args = op.parse_args()
 

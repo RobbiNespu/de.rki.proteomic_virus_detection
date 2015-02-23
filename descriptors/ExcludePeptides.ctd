@@ -34,8 +34,8 @@
                   description="detected peptides" supported_formats="*.idxml" />
 			<ITEM name="output_file" value="" type="output-file" required="true"
                   description="the generated spectra" supported_formats="*.mzml" />
-            <ITEM name="rt_precision" description="The number of digits (after .) to which is rounded for the time distinction" value="2" type="int" />
-            <ITEM name="mz_precision" description="The number of digits (after .) to which is rounded for the mass to charge ratio" value="4" type="int" />
+            <ITEM name="rt_precision" description="Precision by which rt values may deviate (due to floating point errors in MSGF+)" value="0.001" type="double" />
+            <ITEM name="mz_precision" description="Precicion by which mz ratios may deviate (due to floating point errors in MSGF+)" value="0.00001" type="double" />
         </NODE>
     </PARAMETERS>
 </tool>
