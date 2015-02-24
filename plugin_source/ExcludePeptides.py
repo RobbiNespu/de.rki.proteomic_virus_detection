@@ -78,8 +78,9 @@ def main(idxml_file, mzml_file, output_file, mz_precision = 0, rt_precision = 0)
         print 'Run as expected'
     # central namespace, so it does not get added to every (sub-) element when writing the new file ( 1:-1 to exclude the brackets)
     ET.register_namespace('', namespace[1:-1])
-
-    mzml_tree.write(output_file)
+    
+    # write the new mzml file (obey the encoding as everything else leads to errors)
+    mzml_tree.write(output_file, xml_declaration = True, method='xml', encoding = 'ISO-8859-1')
 
 if __name__ == '__main__':
 
