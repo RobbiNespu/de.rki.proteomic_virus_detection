@@ -54,4 +54,4 @@ if __name__ == '__main__':
 
     opts, args = op.parse_args()
 
-    calculateAbundance(opts.spectra_file, opts.peptide_files, opts.matrix_file, opts.relative_abundance_file, opts.corrected_counts_file)
+    calculateAbundance(opts.spectra_files, opts.peptide_files, opts.matrix_file, opts.relative_abundance_file, opts.corrected_counts_file)
