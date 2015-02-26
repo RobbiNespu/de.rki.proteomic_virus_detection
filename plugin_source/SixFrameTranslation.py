@@ -28,16 +28,18 @@ if __name__ == '__main__':
 
     op = OptionParser()
 
-    op.add_option('-g','--genome', dest='genomeFilename', default=None, help='the input genome in fasta format')
-    op.add_option('-o','--output', dest='outputFilename', default=None, help='the output fasta file with the six frame translation')
+    op.add_option('-g','--genomes', dest='genomeFilenames', action='append', default=None, help='the input genome in fasta format')
+    op.add_option('-o','--outputs', dest='outputFilenames', action='append', default=None, help='the output fasta file with the six frame translation')
     op.add_option('-t','--translTable', dest='translationTableNumber', default=1, type='int', help='a translation table number according to http://www.ncbi.nlm.nih.gov/Taxonomy/taxonomyhome.html/index.cgi?chapter=cgencodes')
 
     opts, args = op.parse_args()
     
-    translations = []
-    for dnaRecord in SeqIO.parse(open(opts.genomeFilename), 'fasta'):
-        translations.extend(translate_to_six_frame(dnaRecord, opts.translationTableNumber))
-        
-    SeqIO.write(translations, open(opts.outputFilename, 'w+'), 'fasta')
+    for genomeFilename, outputFilename in zip(opts.genomeFilenames, opts.outputFilenames):
+    
+        translations = []
+        for dnaRecord in SeqIO.parse(open(genomeFilename), 'fasta'):
+            translations.extend(translate_to_six_frame(dnaRecord, opts.translationTableNumber))
+            
+        SeqIO.write(translations, open(outputFilename, 'w+'), 'fasta')
 
     
