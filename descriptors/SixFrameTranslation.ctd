@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="SixFrameTranslation" version="0.0.1" category="VirusDetection"
+      docurl="http://rki.de">
+    <executableName>SixFrameTranslation</executableName>
+    <description><![CDATA[]]></description>
+    <manual><![CDATA[]]></manual>
+    <docurl>Direct links in docs</docurl>
+    <cli>
+        <!-- Following clielements are arguments. You should consider
+             providing a help text to ease understanding. -->
+        <clielement optionIdentifier="-g" isList="false">
+            <mapping referenceName="main.genomeFiles" />
+        </clielement>
+		<clielement optionIdentifier="-o" isList="false">
+            <mapping referenceName="main.outputFiles" />
+        </clielement>
+        <clielement optionIdentifier="-t" isList="false">
+            <mapping referenceName="main.TranslationTable" />
+        </clielement>o
+    </cli>
+    <PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="main" description="Translates fasta files with DNA genomes into amino acid sequences by six frame translation">
+            <ITEMLIST name="genomeFiles" value="" type="input-file" required="true"
+                  description="the input DNA sequence files" supported_formats="*.fasta" />
+			<ITEMLIST name="outputFiles" value="" type="output-file" required="true"
+                  description="the generated amino acid sequence files" supported_formats="*.fasta" />
+            <ITEM name="TranslationTable" description="the number of the translation table that is used to translate the DNA sequence into amino acid sequences" value="1" type="int" />
+        </NODE>
+    </PARAMETERS>
+</tool>
