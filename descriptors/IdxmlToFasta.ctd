@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="IdxmlToFasta" version="0.0.1" category="VirusDetection"
+      docurl="http://rki.de">
+    <executableName>IdxmlToFasta</executableName>
+    <description><![CDATA[]]></description>
+    <manual><![CDATA[]]></manual>
+    <docurl>Direct links in docs</docurl>
+    <cli>
+        <!-- Following clielements are arguments. You should consider
+             providing a help text to ease understanding. -->
+        <clielement optionIdentifier="-i" isList="false">
+            <mapping referenceName="main.idxmlFile" />
+        </clielement>
+		<clielement optionIdentifier="-f" isList="false">
+            <mapping referenceName="main.fastaFile" />
+        </clielement>
+    </cli>
+    <PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="main" description="reads the peptide hits from a idxml file and transfers them into a fasta file">
+            <ITEM name="idxmlFile" value="" type="input-file" required="true"
+                  description="the input idxml file" supported_formats="*.idxml" />
+			<ITEM name="fastaFile" value="" type="output-file" required="true"
+                  description="the generated fasta files with the extracted peptides" supported_formats="*.fasta" />
+        </NODE>
+    </PARAMETERS>
+</tool>
