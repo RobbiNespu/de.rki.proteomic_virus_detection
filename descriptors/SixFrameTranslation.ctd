@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tool name="SixFrameTranslation" version="0.0.1" category="VirusDetection"
+<tool name="SixFrameTranslation" version="0.0.1" category="SixFrameTranslation"
       docurl="http://rki.de">
     <executableName>SixFrameTranslation</executableName>
     <description><![CDATA[]]></description>
