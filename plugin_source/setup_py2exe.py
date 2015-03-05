@@ -1,6 +1,8 @@
-# is run: python setup_py2exe.py py2exe
+# is run: python setup_py2exe.py
 from distutils.core import setup
-import py2exe
+import py2exe, sys
+
+sys.argv.append('py2exe') # so we do not have to add py2exe to the arguments
 
 setup(
     console=['WeightedSimilarityMatrix.py', 'AbundanceCorrection.py', 'ExcludePeptides.py', 'CountPeptides.py', 'ConcatenateFiles.py'],
