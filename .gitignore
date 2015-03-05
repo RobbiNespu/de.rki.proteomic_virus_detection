@@ -8,5 +8,5 @@
 
 payload/binaries_windows/lib/*
 payload/binaries_python_win/lib/*
-payload/binaries_python_linux/lib/*
+payload/binaries_linux/lib/*
 
