@@ -5,6 +5,12 @@ from Bio.SeqRecord import SeqRecord
 from optparse import OptionParser
 
 def translate_to_six_frame(dnaRecord, translationTable):
+    '''
+    translate a Bio.SeqRecord of a DNA sequence via the given translation table into the six possible translations
+    
+    dnaRecord = Bio.SeqRecord of DNA sequence (or other)
+    translationTable = the codon table for translating base triplets into amino acids (number between 1 and 25 based on http://www.ncbi.nlm.nih.gov/Taxonomy/taxonomyhome.html/index.cgi?chapter=cgencodes)
+    '''
     
     translations = []
     
