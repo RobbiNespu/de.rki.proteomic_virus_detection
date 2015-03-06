@@ -1,1 +1,11 @@
-This is a very simple tool that is able to transfer file content from one file into another.
+This is a collection of KNIME knodes/tools to detect the infecting virus
+in ms² spectra files.
+
+1. The tools AbundanceCorrection and WeightedSimilarityMatrix are part
+of the KNIME workflow implementing the tool Pipasic (Penzlin et. al 2014).
+
+2. SixFrameTranslation is used for generating a proteomic library from a
+genomic source.
+
+3. All other tools are part of a KNIME workflow to detect which (family
+of) virus has infected a (human) cell.
