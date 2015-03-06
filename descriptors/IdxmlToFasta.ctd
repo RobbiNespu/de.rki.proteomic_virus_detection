@@ -11,6 +11,9 @@
         <clielement optionIdentifier="-i" isList="false">
             <mapping referenceName="main.idxmlFile" />
         </clielement>
+        <clielement optionIdentifier="-p" isList="false">
+            <mapping referenceName="main.proteomeFile" />
+        </clielement>
 		<clielement optionIdentifier="-f" isList="false">
             <mapping referenceName="main.fastaFile" />
         </clielement>
@@ -18,9 +21,11 @@
     <PARAMETERS version="1.4"
                 xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-        <NODE name="main" description="reads the peptide hits from a idxml file and transfers them into a fasta file">
+        <NODE name="main" description="reads the associated proteins of the peptide hit from a idxml file and selects these from a fasta database into an extra fasta file">
             <ITEM name="idxmlFile" value="" type="input-file" required="true"
                   description="the input idxml file" supported_formats="*.idxml" />
+            <ITEM name="proteomeFile" value="" type="input-file" required="true"
+                  description="the input proteome database file (e.g a reference proteome)" supported_formats="*.fasta" />
 			<ITEM name="fastaFile" value="" type="output-file" required="true"
                   description="the generated fasta files with the extracted peptides" supported_formats="*.fasta" />
         </NODE>
