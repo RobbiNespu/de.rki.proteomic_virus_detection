@@ -1,6 +1,6 @@
 from optparse import OptionParser
 import numpy as np
-from re import match
+from re import match, sub
 from Bio import SeqIO
 
 usage = '''
@@ -92,6 +92,9 @@ def weightPeptides(identifiedPeptides, trypticPeptides, outfile='weighthedPeptid
         text = inF.read()
         peptide_hits = text.split('<PeptideIdentification ')[1:] # => '... sequence="KJAHGSNNK" ....'
         peptides = [peptide_hit.split('sequence="')[1].split('"')[0] for peptide_hit in peptide_hits] # => 'KJAHGSNNK'
+        
+        # the idxml file peptides can contain modifications like 'M(Oxidation)RSDE...' 0> needs to be filtered out 
+        peptides = [sub('\(.*?\)', '', peptide) for peptide in peptides]
         
         for pept in peptides:
             ### split identified peptide into tryptic peptides (if neccessary)
