@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool name="SubtractIdxml" version="0.0.1" category="VirusDetection"
+      docurl="http://rki.de">
+    <executableName>SubtractIdxml</executableName>
+    <description><![CDATA[]]></description>
+    <manual><![CDATA[]]></manual>
+    <docurl>Direct links in docs</docurl>
+    <cli>
+        <!-- Following clielements are arguments. You should consider
+             providing a help text to ease understanding. -->
+        <clielement optionIdentifier="-m" isList="false">
+            <mapping referenceName="main.minuendFile" />
+        </clielement>
+		<clielement optionIdentifier="-s" isList="false">
+            <mapping referenceName="main.subtrahendFile" />
+        </clielement>
+		<clielement optionIdentifier="-o" isList="false">
+            <mapping referenceName="main.outputFile" />
+        </clielement>
+    </cli>
+    <PARAMETERS version="1.4"
+                xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/Param_1_4.xsd"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <NODE name="main" description="Removes hits in one idxml based on whether hits have been found to the same spectra in another">
+            <ITEM name="minuendFile" value="" type="input-file" required="true"
+                  description="the input idxml file from which hits get subtracted" supported_formats="*.idxml" />
+			<ITEM name="subtrahendFile" value="" type="input-file" required="true"
+                  description="the file with hits that subtract hits on the same spectra" supported_formats="*.idxml" />
+			<ITEM name="outputFile" value="" type="output-file" required="true"
+                  description="the generated idxml file" supported_formats="*.idxml" />
+        </NODE>
+    </PARAMETERS>
+</tool>
