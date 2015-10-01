@@ -1,8 +1,13 @@
-# is run: python setup_py2exe.py
+'''
+This is a script to compile the plugins into windows executables via py2exe.
+
+Usage: python setup_py2exe.py
+'''
+
 from distutils.core import setup
 import py2exe, sys
 
-sys.argv.append('py2exe') # so we do not have to add py2exe to the arguments
+sys.argv.append('py2exe')  # so we do not have to add py2exe to the arguments
 
 setup(
     console=[
@@ -16,4 +21,4 @@ setup(
         'SubtractIdxml.py'],
     options={
         'py2exe':{
-            'includes' : ['scipy.sparse.csgraph._validation']}}) # necessary to prevent error: http://stackoverflow.com/questions/14215303/scipy-with-py2exe
+            'includes' : ['scipy.sparse.csgraph._validation']}})  # necessary to prevent error: http://stackoverflow.com/questions/14215303/scipy-with-py2exe
